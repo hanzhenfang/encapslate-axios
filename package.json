@@ -1,0 +1,29 @@
+{
+  "name": "encapslate-axios",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite && npm run-server",
+    "build": "vue-tsc -b && vite build",
+    "preview": "vite preview",
+    "run-server": "npx tsx src/backend/index.ts"
+  },
+  "dependencies": {
+    "@types/node": "^24.0.6",
+    "axios": "^1.10.0",
+    "axios-retry": "^4.5.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "nanoid": "^5.1.5",
+    "vue": "^3.5.17"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vue/tsconfig": "^0.7.0",
+    "typescript": "~5.8.3",
+    "vite": "^7.0.0",
+    "vue-tsc": "^2.2.10"
+  }
+}
