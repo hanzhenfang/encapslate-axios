@@ -3,7 +3,6 @@ import cors from 'cors'
 
 const app = express()
 const PORT = 8765
-let counts = 0
 
 app.use(cors())
 
