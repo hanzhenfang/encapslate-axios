@@ -6,6 +6,7 @@ import type { AxiosResponse, AxiosRequestConfig, InternalAxiosRequestConfig } fr
 import type { AxiosError } from 'axios'
 
 const REQUEST_ID_HEADER_KEY = 'X-Request-Id'
+const YOUR_BACKEND_SUCCESS_CODE = 200
 
 interface RequestOption {
   onBeforeRequest: (
@@ -111,9 +112,9 @@ function createFlatRequest(config: AxiosRequestConfig, options?: Partial<Request
   return flatRequest
 }
 
-const service = createFlatRequest(
+export const service = createFlatRequest(
   {
-    baseURL: 'http://192.168.10.168:8765',
+    baseURL: import.meta.env.MODE === 'dev' ? import.meta.env.VITE_DEV_URL : import.meta.env.VITE_PROD_URL,
   },
   {
     onBeforeRequest: (config) => {
@@ -126,16 +127,15 @@ const service = createFlatRequest(
       return config
     },
     isRequestSuccess(resp) {
-      console.log('resp', resp.data)
-      return true
+      const successCode = resp.data.code
+      return successCode === YOUR_BACKEND_SUCCESS_CODE //你们项目后端返回中的业务状态码
+    },
+    onRequestSuccess() {
+      // 可以设置一个全局统一提醒
+    },
+    onRequestFaild(resp) {
+      console.log('resp', resp)
+      // 可以判断后端返回的结果，来判断是否退出登录状态
     },
   }
 )
-
-export async function getUserInfo() {
-  const resp = await service<{ name: string; age: number }>({
-    url: '/user',
-  })
-  console.log('回复', resp)
-  return
-}
